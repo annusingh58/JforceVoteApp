@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <style>
+            *{
+                margin:0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: sans-serif;
+            }
+            #screen{
+                width:100%;
+                height:100vh;
+                /* border:1px solid red; */
+                background-color: rgb(31,41,55);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #body{
+                height:400px;
+                width:30%;
+                background-color: rgb(17,24,39) ;
+                padding: 20px;
+                border-radius:20px;
+                box-shadow: 5px 10px 15px rgb(21, 21, 21);
+            }
+            #body>h1{
+                color:white;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            #body>form>label{
+                color:white;
+                margin-bottom: 30px;
+                font-size: 18px;
+            }
+            .input-field{
+                width:100%;
+                height:40px;
+                border-radius: 10px;
+                margin-top: 5px;
+                border:1px solid rgb(43, 42, 42);
+                background-color:rgb(17,24,39) ;
+                padding-left: 20px;
+                outline:1px solid  rgb(167,139,250);
+                margin-bottom: 20px;
+                color: white;
+            }
+            .btn-submit{
+                width:100%;
+                height:50px;
+                border-radius: 10px;
+                margin-top: 10px;
+                border:1px solid rgb(43, 42, 42);
+                background-color:rgb(167,139,250) ;
+                padding-left: 20px;
+                outline:  rgb(167,139,250);
+                font-size: 18px;
+            }
+        </style>
+    </head>
+
+    <body>
+       <div id="screen">
+        <div id="body">
+            <h1>Login</h1>
+            <form onsubmit="login(event)">
+               
+                <label>Username</label><br />
+                <input class="input-field" id="username" type="text" placeholder="Enter your username" /><br /><br />
+                <label>Password</label><br />
+                <input class="input-field" id="password" type="password" placeholder="Enter your password" /><br /><br />
+                <input class="btn-submit" type="submit" value="Login" />
+            </form>
+        </div>
+       </div>
+
+        <script>
+            async function login(event) {
+                event.preventDefault();
+
+                let username = document.getElementById("username").value;
+                let password = document.getElementById("password").value;
+
+                let data = await fetch('http://localhost:3000/vote/login',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json; charset=UTF-8',
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password
+                        })
+                    });
+
+                    let response = await data.json();
+                    
+                    if( username == 'admin' && password=='admin'){
+                        window.location.href = "/vote/admin";
+                    }else{
+                        window.location.href = "/vote/home";
+                    }
+
+            }
+        </script>
+    </body>
+
+</html>

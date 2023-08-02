@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         *{
+                margin:0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: sans-serif;
+            }
+            #screen{
+                width:100%;
+                height:100vh;
+                /* border:1px solid red; */
+                background-color: rgb(31,41,55);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #body{
+                height:300px;
+                width:30%;
+                /* border:1px solid red; */
+                background-color: rgb(17,24,39) ;
+                padding: 20px;
+                border-radius:20px;
+                box-shadow: 5px 10px 15px rgb(21, 21, 21);
+            }
+        #body>table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+          color:white;
+        }
+        
+        th {
+          border: 1px solid white;
+          text-align: left;
+          padding: 8px;
+          font-weight: bolder;
+        }
+        td {
+            border: 1px solid white;
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+  <div id="screen">
+    <div id="body">
+        <table id="insertVotes">
+
+        </table>
+    </div>
+  </div>
+
+    <script>
+        window.onload = async() =>{
+            let candidateVote = await fetch('http://localhost:3000/vote/getVote');
+    let response = await candidateVote.json();
+
+    // console.log(response.data);
+
+    //* Inserting the candidate details from DB.
+    let insertVotes = document.getElementById("insertVotes");
+    let headingStructure = `<tr><th>Candidate Name</th><th>Vote Count</th></tr>`;
+    for(let i=0;i<response.data.length;i++){
+        headingStructure += `<tr><td>${response.data[i].candidate}</td><td>${response.data[i].count}</td></tr>`
+    }
+    insertVotes.innerHTML = headingStructure;
+        }
+    </script>
+</body>
+</html>
