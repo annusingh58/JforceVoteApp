@@ -23,7 +23,8 @@ const generateAdmin = async(req,res) =>{
             console.log("Admin already exists.");
         }
     } catch (error) {
-        return res.send(error);
+        console.log(error);
+        return;
     }
 }
 
